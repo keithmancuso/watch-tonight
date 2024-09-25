@@ -1,9 +1,12 @@
-import { MyAssistant } from "@/components/MyAssistant";
+'use client';
+import { Thread } from "@assistant-ui/react";
 
-export default function Home() {
+
+export default function Chat() {
+
   return (
-    <main className="h-dvh">
-      <MyAssistant />
-    </main>
+    <div className="h-full">
+      <Thread />
+    </div>
   );
 }
