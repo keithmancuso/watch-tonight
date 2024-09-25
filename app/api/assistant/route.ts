@@ -1,5 +1,6 @@
 import { AssistantResponse } from 'ai';
 import OpenAI from 'openai';
+import { fetchTVDBShows } from '@/app/lib/tvdb';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || '',
@@ -15,8 +16,30 @@ export async function POST(req: Request) {
     message: string;
   } = await req.json();
 
-  // Create a thread if needed
-  const threadId = input.threadId ?? (await openai.beta.threads.create({})).id;
+  // Use existing threadId or create a new one
+  let threadId = input.threadId;
+  if (!threadId) {
+    const showData = await fetchTVDBShows();
+
+    const newThread = await openai.beta.threads.create();
+    threadId = newThread.id;
+
+
+    // Add a message to the thread
+    await openai.beta.threads.messages.create(threadId, {
+      role: 'user',
+      content: [
+        {
+          "type": "text",
+          "text": "Here are some new shows on TVDB that you can use in your recommendations if you don't know anything else about the user:"
+        },
+        {
+          "type": "text",
+          "text": JSON.stringify(showData)
+        }
+      ],
+    });
+  }
 
   // Add a message to the thread
   const createdMessage = await openai.beta.threads.messages.create(threadId, {
