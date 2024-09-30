@@ -3,7 +3,7 @@ import { signOut, auth } from "@/auth"
 
 export default async function SignOut() {
 
-    const session = await auth()
+    const session = await auth();
 
     return (
         <div className="flex justify-end w-full mt-4 pr-4">
