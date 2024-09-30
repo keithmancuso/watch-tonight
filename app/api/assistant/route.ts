@@ -24,9 +24,13 @@ export async function POST(req: Request) {
   const session = await auth();
   // Use existing threadId or create a new one
 
-  const threadId = session?.thread;
+  const threadId = session?.user.thread;
 
 
+
+  if (!threadId) {
+    throw new Error('Thread ID is not set');
+  }
 
   // Add a message to the thread
   const createdMessage = await openai.beta.threads.messages.create(threadId, {
