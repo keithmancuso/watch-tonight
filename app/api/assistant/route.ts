@@ -14,8 +14,6 @@ export const maxDuration = 30;
 export async function POST(req: Request) {
 
 
-
-
   // Parse the request body
   const input: {
     threadId: string | null;
@@ -26,7 +24,7 @@ export async function POST(req: Request) {
   const session = await auth();
   // Use existing threadId or create a new one
 
-  let threadId = session.thread;
+  const threadId = session?.thread;
 
 
 
