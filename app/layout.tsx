@@ -3,6 +3,10 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { MyRuntimeProvider } from '@/app/MyRuntimeProvider';
 import SignIn from "@/app/components/sign-in";
+import SignOut from "@/app/components/sign-out";
+
+import { auth } from "../auth"
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,13 +29,26 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth()
+
+
+
+  if (!session?.user) return (
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+
+        <SignIn />
+
+      </body>
+    </html>
+  )
 
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <MyRuntimeProvider>
           <header>
-            <SignIn />
+            <SignOut />
           </header>
           {children}
         </MyRuntimeProvider>
