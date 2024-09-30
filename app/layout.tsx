@@ -5,7 +5,7 @@ import { MyRuntimeProvider } from '@/app/MyRuntimeProvider';
 import SignIn from "@/app/components/sign-in";
 import SignOut from "@/app/components/sign-out";
 
-import { auth } from "../auth"
+import { auth } from "@/auth"
 
 
 const geistSans = localFont({
@@ -37,7 +37,13 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 
-        <SignIn />
+
+        <div className="flex flex-col items-center justify-center h-screen">
+          <h1 className="text-2xl font-bold mb-4">Welcome to Watch Tonight</h1>
+          <SignIn />
+        </div>
+
+
 
       </body>
     </html>
