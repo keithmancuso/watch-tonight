@@ -60,7 +60,7 @@ export default async function RootLayout({
           </div>
         </header>
 
-        <div className="mt-2">
+        <div className="">
           {children}
         </div>
 

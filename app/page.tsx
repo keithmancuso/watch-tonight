@@ -3,19 +3,48 @@ import { Thread } from "@assistant-ui/react";
 
 import { Message, useAssistant } from 'ai/react';
 import MovieCarousel from './components/movie-carousel';
+import { useEffect } from 'react';
 
 export default function Chat() {
 
-  const { status, messages, input, submitMessage, handleInputChange } =
+  const { status, messages, input, submitMessage, handleInputChange, append } =
     useAssistant({ api: '/api/assistant' });
 
+
+  // useEffect(() => {
+  //   // Check if there are no messages (i.e., it's a fresh start)
+  //   if (messages.length === 0) {
+  //     append({ role: 'user', content: "What should I watch tonight?" });
+  //   }
+  // }, [append, messages.length]); // Include missing dependencies
+
+
+  const handleThumbsUp = (showName: string) => {
+    const message = `I'm interested in watching ${showName}. Can you recommend similar shows?`;
+    append({ role: 'user', content: message });
+  };
+
+  const handleThumbsDown = (showName: string) => {
+    const message = `I'm not interested in watching ${showName}. Can you recommend different shows?`;
+    append({ role: 'user', content: message });
+  };
+
+  const handleWatched = (showName: string) => {
+    const message = `I've watched ${showName}. Can you recommend more shows based on this?`;
+    append({ role: 'user', content: message });
+  };
 
   return (
     <div>
       {status === "awaiting_message" && messages.length > 0 && messages[messages.length - 1].role === 'assistant' &&
         messages[messages.length - 1].content &&
         messages[messages.length - 1].content.startsWith('{') && (
-          <MovieCarousel movies={JSON.parse(messages[messages.length - 1].content)} />
+          <MovieCarousel
+            movies={JSON.parse(messages[messages.length - 1].content)}
+            onThumbsUp={handleThumbsUp}
+            onThumbsDown={handleThumbsDown}
+            onWatched={handleWatched}
+          />
         )}
 
       {status === 'in_progress' && <div>Updating recommendations...</div>}
