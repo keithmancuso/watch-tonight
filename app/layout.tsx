@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { MyRuntimeProvider } from '@/app/MyRuntimeProvider';
 import SignIn from "@/app/components/sign-in";
 import SignOut from "@/app/components/sign-out";
 
@@ -52,12 +51,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <MyRuntimeProvider>
-          <header>
-            <SignOut />
-          </header>
-          {children}
-        </MyRuntimeProvider>
+
+        <header>
+          <SignOut />
+        </header>
+        {children}
+
       </body>
     </html>
   );
