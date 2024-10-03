@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { MyRuntimeProvider } from '@/app/MyRuntimeProvider';
 import SignIn from "@/app/components/sign-in";
 import SignOut from "@/app/components/sign-out";
 
@@ -39,7 +38,7 @@ export default async function RootLayout({
 
 
         <div className="flex flex-col items-center justify-center h-screen">
-          <h1 className="text-2xl font-bold mb-4">Welcome to Watch Tonight</h1>
+          <h1 className="text-2xl font-bold mb-4">Watch Tonight</h1>
           <SignIn />
         </div>
 
@@ -51,13 +50,22 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <MyRuntimeProvider>
-          <header>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100`}>
+
+        <header className="flex items-center justify-between w-full bg-white px-4 py-1 shadow sticky top-0">
+          <div className="flex-1"></div>
+          <h1 className="text-xl font-bold">Watch Tonight</h1>
+          <div className="flex-1 flex justify-end">
             <SignOut />
-          </header>
+          </div>
+        </header>
+
+        <div className="">
           {children}
-        </MyRuntimeProvider>
+        </div>
+
+
+
       </body>
     </html>
   );
