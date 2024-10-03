@@ -15,11 +15,10 @@ interface MovieCarouselProps {
 
 const MovieCarousel: React.FC<MovieCarouselProps> = ({ movies }) => {
     return (
-        <div className="movie-carousel">
-            <h2 className="text-2xl font-bold mb-4">TV Show Suggestions</h2>
-            <div className="flex overflow-x-auto space-x-4 pb-4">
+        <div className="container mx-auto px-4 flex justify-center">
+            <div className="flex flex-col space-y-4 pb-4">
                 {movies.suggestions.map((show, index) => (
-                    <div key={index} className="flex-none w-64">
+                    <div key={index} className="w-full max-w-md">
                         <div className="bg-white rounded-lg shadow-md overflow-hidden">
                             <Image
                                 src={show.image}
