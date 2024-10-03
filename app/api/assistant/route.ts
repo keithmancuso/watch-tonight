@@ -1,8 +1,8 @@
-import { AssistantResponse } from 'ai';
+import { AssistantResponse, tool } from 'ai';
 import OpenAI from 'openai';
 import { fetchTVDBShows } from '@/app/lib/tvdb';
 import { auth } from "@/auth"
-
+import { z } from 'zod';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || '',
@@ -25,6 +25,7 @@ export async function POST(req: Request) {
   // Use existing threadId or create a new one
 
   const threadId = session?.user.thread;
+
 
 
 
@@ -65,6 +66,18 @@ export async function POST(req: Request) {
 
               switch (toolCall.function.name) {
                 // configure your tool calls here
+
+                // case 'weather': 
+                //   tool({
+                //     description: 'Get the weather in a location',
+                //     parameters: z.object({
+                //       location: z.string().describe('The location to get the weather for'),
+                //     }),
+                //     execute: async ({ location }) => ({
+                //       location,
+                //       temperature: 72 + Math.floor(Math.random() * 21) - 10,
+                //     }),
+                //   });
 
                 default:
                   throw new Error(
