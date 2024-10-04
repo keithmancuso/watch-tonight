@@ -10,15 +10,6 @@ export default function Chat() {
   const { status, messages, input, submitMessage, handleInputChange, append } =
     useAssistant({ api: '/api/assistant' });
 
-
-  // useEffect(() => {
-  //   // Check if there are no messages (i.e., it's a fresh start)
-  //   if (messages.length === 0) {
-  //     append({ role: 'user', content: "What should I watch tonight?" });
-  //   }
-  // }, [append, messages.length]); // Include missing dependencies
-
-
   const handleThumbsUp = (showName: string) => {
     const message = `I'm interested in watching ${showName}. Can you recommend similar shows?`;
     append({ role: 'user', content: message });
@@ -34,10 +25,42 @@ export default function Chat() {
     append({ role: 'user', content: message });
   };
 
+  const handleAppend = (message: string) => {
+    append({ role: 'user', content: message });
+  };
+
   return (
     <div>
+
+      <div className="container mx-auto px-4 mb-2 flex justify-center space-x-4 bg-white py-2">
+        <button
+          onClick={() => append({ role: 'user', content: "What should I watch tonight?" })}
+          className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 font-semibold py-1 px-3 rounded text-sm"
+        >
+          Tonight
+        </button>
+        <button
+          onClick={() => append({ role: 'user', content: "What&apos;s on next?" })}
+          className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 font-semibold py-1 px-3 rounded text-sm"
+        >
+          Next
+        </button>
+        <button
+          onClick={() => append({ role: 'user', content: "What am I already watching?" })}
+          className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 font-semibold py-1 px-3 rounded text-sm"
+        >
+          Watching
+        </button>
+        <button
+          onClick={() => append({ role: 'user', content: "What have I watched?" })}
+          className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 font-semibold py-1 px-3 rounded text-sm"
+        >
+          Watched
+        </button>
+      </div>
       <div className="container mx-auto px-4 py-4">
         {messages.length > 0 && messages[messages.length - 1].role === 'assistant' && (
+
           <ShowsList
             message={messages[messages.length - 1].content}
             status={status}
@@ -45,9 +68,18 @@ export default function Chat() {
             onThumbsDown={handleThumbsDown}
             onWatched={handleWatched}
           />
+
+
+
         )}
       </div>
+
+      {status === 'in_progress' && <div>Updating shows...</div>}
+
       <footer className="fixed bottom-0 left-0 right-0 bg-white py-2 shadow-md">
+
+
+
         <form onSubmit={submitMessage} className="container mx-auto px-4 flex items-center">
           <input
             disabled={status !== 'awaiting_message'}
