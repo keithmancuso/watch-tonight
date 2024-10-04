@@ -51,6 +51,7 @@ export default function Chat() {
             onThumbsUp={handleThumbsUp}
             onThumbsDown={handleThumbsDown}
             onWatched={handleWatched}
+            onAppend={handleAppend}
           />
 
 
