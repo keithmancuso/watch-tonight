@@ -2,7 +2,7 @@
 import { Thread } from "@assistant-ui/react";
 
 import { Message, useAssistant } from 'ai/react';
-import MovieCarousel from './components/movie-carousel';
+import ShowsList from './components/shows-list';
 import { useEffect } from 'react';
 
 export default function Chat() {
@@ -36,20 +36,18 @@ export default function Chat() {
 
   return (
     <div>
-      {status === "awaiting_message" && messages.length > 0 && messages[messages.length - 1].role === 'assistant' &&
-        messages[messages.length - 1].content &&
-        messages[messages.length - 1].content.startsWith('{') && (
-          <MovieCarousel
-            movies={JSON.parse(messages[messages.length - 1].content)}
+      <div className="container mx-auto px-4 py-4">
+        {messages.length > 0 && messages[messages.length - 1].role === 'assistant' && (
+          <ShowsList
+            message={messages[messages.length - 1].content}
+            status={status}
             onThumbsUp={handleThumbsUp}
             onThumbsDown={handleThumbsDown}
             onWatched={handleWatched}
           />
         )}
-
-      {status === 'in_progress' && <div>Updating recommendations...</div>}
-
-      <footer className="fixed bottom-0 w-full bg-white py-2 shadow">
+      </div>
+      <footer className="fixed bottom-0 left-0 right-0 bg-white py-2 shadow-md">
         <form onSubmit={submitMessage} className="container mx-auto px-4 flex items-center">
           <input
             disabled={status !== 'awaiting_message'}
@@ -61,7 +59,7 @@ export default function Chat() {
           <button
             type="submit"
             disabled={status !== 'awaiting_message'}
-            className="bg-indigo-600 text-white rounded-r-md py-2 px-4 text-sm font-semibold hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+            className="bg-indigo-600 text-white border-2 border-indigo-600 rounded-r-md py-2 px-4 text-sm font-semibold hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
           >
             Send
           </button>
