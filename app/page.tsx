@@ -32,33 +32,17 @@ export default function Chat() {
   return (
     <div>
 
-      <div className="container mx-auto px-4 mb-2 flex justify-center space-x-4 bg-white py-2">
-        <button
-          onClick={() => append({ role: 'user', content: "What should I watch tonight?" })}
-          className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 font-semibold py-1 px-3 rounded text-sm"
-        >
-          Tonight
-        </button>
-        <button
-          onClick={() => append({ role: 'user', content: "What&apos;s on next?" })}
-          className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 font-semibold py-1 px-3 rounded text-sm"
-        >
-          Next
-        </button>
-        <button
-          onClick={() => append({ role: 'user', content: "What am I already watching?" })}
-          className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 font-semibold py-1 px-3 rounded text-sm"
-        >
-          Watching
-        </button>
-        <button
-          onClick={() => append({ role: 'user', content: "What have I watched?" })}
-          className="bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 font-semibold py-1 px-3 rounded text-sm"
-        >
-          Watched
-        </button>
-      </div>
+      <nav className="w-full border-b border-gray-200" aria-label="Tabs">
+        <div className="container mx-auto px-4 flex space-x-4 w-full" aria-label="Tabs">
+          <button className="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700" onClick={() => append({ role: 'user', content: "What should I watch tonight?" })}>Tonight</button>
+          <button className="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700" onClick={() => append({ role: 'user', content: "What&apos;s on next?" })}>Next</button>
+          <button className="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page" onClick={() => append({ role: 'user', content: "What am I already watching?" })}>Watching</button>
+          <button className="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700" onClick={() => append({ role: 'user', content: "What have I watched?" })}>Watched</button>
+        </div>
+
+      </nav>
       <div className="container mx-auto px-4 py-4">
+
         {messages.length > 0 && messages[messages.length - 1].role === 'assistant' && (
 
           <ShowsList
